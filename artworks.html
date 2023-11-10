@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Works</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="navigation">
+        <a href="index.html">Home</a>
+        <a href="cv.html">CV</a>
+        <a href="artworks.html">Artworks</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <div class="gallery" id="gallery">
+        
+    </div>
+    <div id="work" class="work">
+        <span class="close" onclick="closeWork()">&times;</span>
+        <img id="work-image" src="" alt="">
+        <h2 id="title"></h2>
+        <h3 id="description"></h3>
+        <h3 id="text"></h3>
+        <div id="work-images" class="work-images"></div>
+        <div id="media" class="media"></div>
+       
+    </div>
+    <script>
+
+        function randomCoordinates() {
+            const maxWidth = window.innerWidth;
+            const maxHeight = window.innerHeight;
+            const randomLeft = Math.random() * (maxWidth - 200);
+            const randomTop = Math.random() * (maxHeight / 1.5);
+            const randomWidth = (Math.random()+0.1) * 100;
+            const randomHeight = (Math.random()+0.1) * 100;
+            return { left: randomLeft, top: randomTop, width: randomWidth, height: randomHeight };
+            
+        }
+
+        
+
+        function showImages(images) {
+            const Gallery = document.getElementById('gallery');
+            images.forEach((image, index) => {
+                const { left, top, width, height } = randomCoordinates();
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'image';
+                imageDiv.style.left = `${left}px`;
+                imageDiv.style.top = `${top}px`;
+                imageDiv.style.width = `${width}%`;
+                imageDiv.style.height = `${height}%`;
+                imageDiv.onclick = () => openWork(image.path, image.title, image.description, image.text, image.imagePaths, image.media);
+                const img = document.createElement('img');
+                img.src = image.path;
+                img.alt = image.title;
+                imageDiv.appendChild(img);
+                Gallery.appendChild(imageDiv);
+               
+            });
+        }
+        const images = [
+            { path: 'img/tpfsb.png', title: 'TENDON/PULSE/FLESH/SKIN/BONE', description: '2023', text: 'Spatial Sound, Wearable Devices', imagePaths: ['img/T2.jpg', 'img/T3.jpg', 'img/T4.jpg'] },
+            { path: 'img/LMT.jpg', title: 'Landscape, Memory, and Time', description: '2023', text: 'Generative Soundscapes and Visuals', imagePaths: ['img/LMT9.png', 'img/LMT1.png'] },
+            { path: 'img/SBT1.jpg', title: 'Snot, Booger, Tears', description: '2023', text: 'Two-Channel Video, Eight-Channel Sound, Poetry (Collaboration with Lilac RED)', imagePaths: ['img/SBT.png'], media: ['https://player.vimeo.com/video/813180262?h=5fd57ded39&title=0&byline=0&portrait=0'] },
+            { path: 'img/Oh.png', title: 'Oh, le flâneur', description: '2022', text: 'Two-Channel Video, Stereo Sound, Poetry (Collaboration with Lilac RED)',imagePaths: ['img/Oh.png'], media: ['https://player.vimeo.com/video/881492080?h=5fd57ded39&title=0&byline=0&portrait=0']},
+            { path: 'img/43.png', title: '43', description: '2022', text: 'Generative Visual', imagePaths: ['img/43.png', 'img/431.png', 'img/432.jpg']},
+            { path: 'img/BUG4.png', title: 'BUG', description: '2022', text: 'Immersive Audio-Visual Performance', imagePaths: ['img/BUG.jpg', 'img/BUG2.jpg', 'img/BUG3.jpg']},
+            { path: 'img/K.jpg', title: '16:31:34,19:37:06,15:21:58,12:49:47', description: '2021', text: 'Voice, Projection, Ink, Performance', imagePaths: ['img/K.jpg', 'img/K2.jpg', 'img/K3.jpg']},
+            { path: 'img/leftover.png', title: 'leftover', description: '2021', text: 'Ladder, Armchair, Masking Film, Live Sound Mixing, Performance', imagePaths: ['img/leftover.png', 'img/leftover2.png', 'img/leftover3.png'], media: ['https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1482461788&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false']},
+            { path: 'img/P1.png', title: 'Pending', description: '2021', text: 'Computer Animation, Voice', imagePaths: ['img/P1.png', 'img/P2.png', 'img/P3.png', 'img/P4.png']},
+            { path: 'img/VOID.jpg', title: 'VOID', description: '2020', text: 'Live-Coding, Recording and Feedback', imagePaths: ['img/VOID.jpg']},
+            { path: 'img/C.jpg', title: 'CONFESSION', description: '2020', text: 'Light, Live Camera, Voice', imagePaths: ['img/C.jpg', 'img/C5.png', 'img/C2.jpg', 'img/C3.jpg']}
+
+        ];
+
+        showImages(images);
+
+       
+
+
+
+
+        function openWork(imagePath, title, description, text, imagePaths, media) {
+            const work = document.getElementById('work');
+            const workImage = document.getElementById('work-image');
+            const workImages = document.getElementById('work-images');
+            const Title = document.getElementById('title');
+            const Description = document.getElementById('description');
+            const Text = document.getElementById('text');
+            const Media = document.getElementById('media');
+            work.style.display = 'block';
+            workImages.innerHTML = "";
+            Title.innerText = title;
+            Description.innerText = description;
+            Text.innerText = text;
+            Media.innerHTML = "";
+
+            for (let i = 0; i < imagePaths.length; i++) {
+                const img = document.createElement('img');
+                img.src = imagePaths[i];
+                img.style.width = "100%";
+                workImages.appendChild(img);
+            }
+            for (let i = 0; i < media.length; i++) {
+                const iframe = document.createElement('iframe');
+                iframe.src = media[i];
+                iframe.style.width = "960px";
+                iframe.style.height = "540px";
+                iframe.frameBorder = "0";
+                iframe.allowFullscreen = true;
+                Media.appendChild(iframe);
+            }
+        }
+
+        function closeWork() {
+            const work = document.getElementById('work');
+            work.style.display = 'none';
+        }
+    </script>
+    <script src="three.js"></script>
+    <script src="script.js"></script>
+    <script src="https://player.vimeo.com/api/player.js"></script>
+</body>
+</html>
